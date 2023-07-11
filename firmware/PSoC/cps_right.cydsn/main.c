@@ -46,14 +46,14 @@ int main(void)
             }
             memcpy(i2cbuf, &touchval, 64);
             CapSense_UpdateEnabledBaselines();
-            while (left_ready_in_Read() != 1)
+            while (left_ready_in_Read() != 1) //等待另一个PSoC准备好开始下一次扫描
             {
                 CyDelayUs(1);
             }
             CapSense_ScanEnabledWidgets();
-            right_start_out_Write(start);
-            CyDelayUs(50);
-            right_start_out_Write(running);
+            right_start_out_Write(start); //向right_start信号线写入1表明扫描开始，使另一个PSoC也开始扫描
+            CyDelayUs(50); //延迟50微秒确保另一个PSoC收到信号
+            right_start_out_Write(running); //向right_start信号线写入0表明正在扫描，请勿进行下一次扫描
         }
     }
 }
