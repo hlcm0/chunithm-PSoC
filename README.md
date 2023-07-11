@@ -1,17 +1,17 @@
 # chunithm-PSoC
 一个可参考的chunithm手台使用PSoC芯片的例子
 
-# 大体结构
+## 大体结构
 * 使用RP2040开发板作为主控芯片
 * 两块PSoC4（cy8c4245axi-483）作为触摸芯片，通过I2C与RP2040通讯
 * 由于RP2040的ADC外设数量不足，使用74hc4051多路模拟复用器芯片来轮询六个红外接收
 * 使用yubideck的io进行通讯
 
-# 特别感谢
+## 特别感谢
 * 凌鸽在触摸干扰调试和Air调试上提供的帮助（Air校准部分参考自LINGNITHM项目）
 * yubideck开放的io协议
 
-# 关于PSoC
+## 关于PSoC
 * 需要的软件：PSoC Creator
 * PSoC Creator的使用可以观看youtube上的PSoC101相关教程，也可以来三连支持一下我在bilibili上传的渣翻的[PSoC101教程](https://www.bilibili.com/video/BV1js4y1y7VQ/)（
 * PSoC4的烧录也许可以使用普通的SWD烧录器（如jlink，daplink等），但我并没摸索出来。目前已知可行的办法：</br>
@@ -19,7 +19,7 @@
 2.使用miniprog（将近一千块钱，好贵）</br>
 3.使用arduino作为其SWD烧录器（我没试过，不过应该可以），详见项目[PSoC4_HSSP_Arduino](https://github.com/k4zuk/PSoC4_HSSP_Arduino)</br>
 
-# 备注
+## 备注
 * pid，vid，设备名和制造商名可以在代码中修改了，而不需要修改boards.txt
 * 受预算和个人精力限制，本项目的cad以及支架设计极为落后，所以仅供软硬件方案参考，可参考更完善成熟的方案，如LINGNITHM、GSK等
 * 可以将I2C通讯更改为UART通讯来达成更高的传输速度
