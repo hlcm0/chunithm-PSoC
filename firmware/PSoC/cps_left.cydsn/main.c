@@ -27,32 +27,32 @@ int main(void)
 
     CyGlobalIntEnable; /* Enable global interrupts. */
 
-    CapSense_Start();
-    CapSense_InitializeAllBaselines();
-    CapSense_ScanEnabledWidgets();
+    CapSense_Start(); //启动CapSense
+    CapSense_InitializeAllBaselines(); //初始化Baseline
+    CapSense_ScanEnabledWidgets(); //开始扫描所有区块
     
-    I2C_Start();
-    I2C_EzI2CSetBuffer1( 64, 1, i2cbuf );
+    I2C_Start(); //启动I2C
+    I2C_EzI2CSetBuffer1( 64, 1, i2cbuf ); //设置I2C buffer
 
     for(;;)
     {
 
-        if( ! CapSense_IsBusy() )
+        if( ! CapSense_IsBusy() ) //等待扫描完成
         {
             for (int i=0;i<16;i++)
             {
                 touchval.baseline[i] = CapSense_GetBaselineData(i);
                 touchval.raw[i] = CapSense_ReadSensorRaw(i);
             }
-            memcpy(i2cbuf, &touchval, 64);
-            CapSense_UpdateEnabledBaselines();
-            left_ready_out_Write(ready);
-            while (right_start_in_Read() != 1)
+            memcpy(i2cbuf, &touchval, 64); //将触摸数据转入I2C buffer
+            CapSense_UpdateEnabledBaselines(); //根据上一次扫描数据更新Baseline
+            left_ready_out_Write(ready); //向left_ready信号线写入1来表明已准备好开始下一次扫描
+            while (right_start_in_Read() != 1) //等待另一个PSoC发出的right_start信号
             {
                 CyDelayUs(1);
             }
-            CapSense_ScanEnabledWidgets();
-            left_ready_out_Write(busy);
+            CapSense_ScanEnabledWidgets(); //开始扫描所有区块
+            left_ready_out_Write(busy); //向left_ready写入0表明正在繁忙，不能开始下一次扫描
         }
     }
 }
