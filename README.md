@@ -22,9 +22,13 @@
 ## 备注
 * pid，vid，设备名和制造商名可以在代码中修改了，而不需要修改boards.txt
 * 受预算和个人精力限制，本项目的cad以及支架设计极为落后，所以仅供软硬件方案参考，可参考更完善成熟的方案，如LINGNITHM、GSK等
+* 由于右边Air在PCB上没空间走线过去，所以我使用了一根排线飞过去，这就是pcb原理图中有四个XH插座的原因（（可以看实物图）
 * 可以将I2C通讯更改为UART通讯来达成更高的传输速度
 * 板子上加了一个EEPROM，连接到了RP2040的I2C0外设，可用于保存用户配置（未实现），因为RP2040没有自带EEPROM
 * 暂未编写灯光反馈功能
 * 如果想适配原生串口，需要修改TinyUSB库的部分代码来删除其中的DTR信号检查
 * 两个芯片之间通过left_ready（左芯片准备好开始下一次扫描），right_start（右芯片开始下一次扫描）两个信号线来保证两个芯片的同步，从而防止扫描的干扰。可以利用上两个PSoC上剩余空闲的引脚来实现其他功能（如PSoC的复位，数据传输等等）
 * 单次扫描周期目前实测为23ms，可能需要修改PSoC代码的部分配置来达成更高的扫描速度，详见[CapSense Design Guide](https://www.infineon.com/dgdl/Infineon-AN85951_PSoC_4_CapSense_Design_Guide-ApplicationNotes-v27_00-CN.pdf?fileId=8ac78c8c7cdc391c017d07235d2d4679)
+
+## 实物图
+![pic0](https://github.com/hlcmOxO/chunithm-PSoC/assets/103294894/00d43366-8111-4371-8fb6-3c012987adc4)
